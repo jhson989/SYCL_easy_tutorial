@@ -45,7 +45,7 @@ int main(void) {
 
     // Print the performance
     float time = (ed.tv_sec - st.tv_sec) + ((ed.tv_usec-st.tv_usec)*1e-6);
-    printf("    -- Kernel run finished.\n");
+    printf("    -- Kernel run finished\n");
     printf("    -- Elapsed time: %.3f s\n", time);
 
 
