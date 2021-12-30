@@ -1,8 +1,11 @@
-    #include <vector>
+#include <vector>
 #include <cstdlib>
+#include <sys/time.h>
 
 #include <CL/sycl.hpp>
 namespace sycl = cl::sycl;
+
+#include <devceiProperties.hpp>
 
 const size_t num_data = 1<<25;
 
@@ -15,10 +18,12 @@ void parallel_add(sycl::queue queue, std::vector<T>& inA, std::vector<T>& inB, s
 
     queue.submit([&] (sycl::handler & cgh) {
 
+        // Define accessors
         auto accA = bufA.template get_access<sycl::access::mode::read>(cgh);
         auto accB = bufB.template get_access<sycl::access::mode::read>(cgh);
         auto accOut = bufOut.template get_access<sycl::access::mode::write>(cgh);
 
+        // Kernel submission
         cgh.parallel_for(sycl::range<1>(out.size()), [=] (sycl::id<1> idx) {
             accOut[idx] = accA[idx] + accB[idx];
         });
@@ -28,11 +33,16 @@ void parallel_add(sycl::queue queue, std::vector<T>& inA, std::vector<T>& inB, s
 
 int main(void) {
 
+    timeval st, ed;
+    
+
     // Explicitly context selection
     sycl::platform platform(sycl::gpu_selector{});
     sycl::device device = platform.get_devices(sycl::info::device_type::gpu)[0];
     sycl::context context(device);
     sycl::queue queue(context, device);
+
+    print_properties(queue);
 
     // Data initialization
     std::vector<float> inA;
@@ -50,10 +60,13 @@ int main(void) {
     printf("Vector addition, num_data = %lu\n", num_data);
     printf("==============================================================\n");
 
+
+    gettimeofday(&st, NULL);
     parallel_add(queue, inA, inB, out);
+    gettimeofday(&ed, NULL);
 
-    printf("kernel run finished\n");
-
+    float time = (ed.tv_sec - st.tv_sec) + ((ed.tv_usec-st.tv_usec)*1e-6);
+    printf("kernel run finished\n. Elapsed time: %.3f s\n", time);
     // Result test
     for (auto i=0; i<num_data; i++) {
         if (out[i] != inA[i] + inB[i]) {
