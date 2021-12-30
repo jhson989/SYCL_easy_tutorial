@@ -13,7 +13,7 @@ void print_properties_host() {
     std::cout << "Name: " << dev.get_info<sycl::info::device::name>() << std::endl;
     std::cout << "Vendor: " << dev.get_info<sycl::info::device::vendor>() << std::endl;
     std::cout << "Memory size: " << dev.get_info<sycl::info::device::global_mem_size>()/1024.0f/1024.0f/1024.0f << " GB"  << std::endl;
-    std::cout << "================================================" << std::endl;
+    std::cout << "================================================" << std::endl << std::endl;
     
 }
 
@@ -27,7 +27,7 @@ void print_properties_gpu() {
     std::cout << "Name: " << dev.get_info<sycl::info::device::name>() << std::endl;
     std::cout << "Vendor: " << dev.get_info<sycl::info::device::vendor>() << std::endl;
     std::cout << "Memory size: " << dev.get_info<sycl::info::device::global_mem_size>()/1024.0f/1024.0f/1024.0f << " GB" << std::endl;
-    std::cout << "================================================" << std::endl;
+    std::cout << "================================================" << std::endl << std::endl;
 
 }
 
@@ -39,6 +39,6 @@ void print_properties(sycl::queue& queue) {
     std::cout << "Name: " << dev.get_info<sycl::info::device::name>() << std::endl;
     std::cout << "Vendor: " << dev.get_info<sycl::info::device::vendor>() << std::endl;
     std::cout << "Memory size: " << dev.get_info<sycl::info::device::global_mem_size>()/1024.0f/1024.0f/1024.0f << " GB"  << std::endl;
-    std::cout << "================================================" << std::endl;
+    std::cout << "================================================" << std::endl << std::endl;
 }
 
