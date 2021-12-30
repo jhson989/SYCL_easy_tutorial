@@ -5,6 +5,8 @@ Environemnt
 - clang 14.0.0 (https://github.com/intel/llvm.git 8c5b7017a925701ef4034056b5ed8e0fac2a0011)
 - cmake 3.20.2
 - cuda 10.2
+  
+Build steps
 1. mkdir build && cd build
 2. cmake ..
 3. make
