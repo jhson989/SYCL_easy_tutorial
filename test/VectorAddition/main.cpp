@@ -35,11 +35,12 @@ int main(void) {
 
     // Run the kernel
     printf("==============================================================\n");
-    printf("Vector addition, num_data = %lu\n", num_data);
+    printf("Vector addition\n");
+    printf("C[%lu] = A[%lu] + B[%lu\n\n", num_data, num_data, num_data);
 
     timeval st, ed;
     gettimeofday(&st, NULL);
-    parallel_add(queue, inA, inB, out);
+    parallel_vector_addition(queue, inA, inB, out);
     gettimeofday(&ed, NULL);
 
     // Print the performance
