@@ -8,11 +8,11 @@ namespace sycl = cl::sycl;
 #include <matrixMultiplication.hpp>
 #include <devceiProperties.hpp>
 
-bool check_result(std::vector<float> inA, std::vector<float> inB, std::vector<float> out);
+bool check_result(std::vector<float>& inA, std::vector<float>& inB, std::vector<float>& out);
 
-const size_t M = 1024;
-const size_t K = 1024;
-const size_t N = 1024;
+const size_t M = 5*1024;
+const size_t K = 8*1024;
+const size_t N = 7*1024;
 
 
 int main(void) {
@@ -30,23 +30,25 @@ int main(void) {
     std::vector<float> inA;
     std::vector<float> inB;
     std::vector<float> out;
-    for (auto i=0; i<M*N; i++) 
+    inA.reserve(M*K);
+    for (auto i=0; i<M*K; i++) 
         inA.push_back((rand()%100-50)/100.0f);
+    inB.reserve(K*N);
     for (auto i=0; i<K*N; i++)
         inB.push_back((rand()%100-50)/100.0f);
+    out.reserve(M*N);
     for (auto i=0; i<M*N; i++)
         out.push_back(0.0f);
     
     // Run the kernel
     printf("==============================================================\n");
     printf("Matrix Multiplication\n");
-    printf("C[%lu*%lu] = A[%lu*%lu] * B[%lu*%lu]\n\n", M, N, M, K, K, N);
+    printf("C[%lu,%lu] = A[%lu,%lu] * B[%lu,%lu]\n", M, N, M, K, K, N);
 
     timeval st, ed;
     gettimeofday(&st, NULL);
     parallel_matrix_multiplication(queue, inA, inB, out, M, N, K);
     gettimeofday(&ed, NULL);
-
     // Print the performance
     float time = (ed.tv_sec - st.tv_sec) + ((ed.tv_usec-st.tv_usec)*1e-6);
     printf("    -- Kernel run finished\n");
@@ -63,8 +65,24 @@ int main(void) {
     return 0;
 }
 
+bool in_range(float pred, float gt) {
+    return (gt-(1e-4) <= pred && pred <= gt+(1e-4));
+}
 
-bool check_result(std::vector<float> inA, std::vector<float> inB, std::vector<float> out) {
+bool check_result(std::vector<float>& inA, std::vector<float>& inB, std::vector<float>& out) {
+    for (size_t m=0; m<M; m++) {
+        for (size_t n=0; n<N; n++) {
+            float sum = 0.0f;
+            for (size_t k=0; k<K; k++) {
+                sum += inA[m*K+k] * inB[k*N+n];
+            }
+            if (in_range(out[m*N+n], sum) == false) {
+                printf("    [[ERR]] out[%lu,%lu] is %f, but correct vaule is %f\n", m, n, out[m*N+n], sum);
+                return false;
+            }
+                
+        }
+    }
 
     return true;
 }

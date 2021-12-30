@@ -25,6 +25,7 @@ void parallel_vector_addition(sycl::queue queue, std::vector<T>& inA, std::vecto
             accOut[idx] = accA[idx] + accB[idx];
         });
     });
+
 }
 
 #endif
