@@ -3,7 +3,7 @@
 #include <CL/sycl.hpp>
 namespace sycl = cl::sycl;
 
-void print_properties_cpu() {
+void print_properties_host() {
     
     sycl::host_selector host;
     sycl::queue host_q(host);

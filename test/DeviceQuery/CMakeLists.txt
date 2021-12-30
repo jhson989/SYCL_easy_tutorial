@@ -1,4 +1,4 @@
-set(APP VectorAddition.out)
+set(APP DeviceQuery.out)
 
 set(MAIN main.cpp)
 set(SRC_FILES 

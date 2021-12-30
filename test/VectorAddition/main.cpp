@@ -13,15 +13,13 @@ const size_t num_data = 1<<25;
 
 int main(void) {
 
-    timeval st, ed;
-    
-
     // Explicitly context selection
     sycl::platform platform(sycl::gpu_selector{});
     sycl::device device = platform.get_devices(sycl::info::device_type::gpu)[0];
     sycl::context context(device);
     sycl::queue queue(context, device);
 
+    // Querying device info.
     print_properties(queue);
 
     // Data initialization
@@ -35,26 +33,28 @@ int main(void) {
     }
 
 
-    // Run kernel
+    // Run the kernel
     printf("==============================================================\n");
     printf("Vector addition, num_data = %lu\n", num_data);
-    printf("==============================================================\n");
 
-
+    timeval st, ed;
     gettimeofday(&st, NULL);
     parallel_add(queue, inA, inB, out);
     gettimeofday(&ed, NULL);
 
+    // Print the performance
     float time = (ed.tv_sec - st.tv_sec) + ((ed.tv_usec-st.tv_usec)*1e-6);
-    printf("kernel run finished\n. Elapsed time: %.3f s\n", time);
-    // Result test
+    printf("    -- kernel run finished\n. Elapsed time: %.3f s\n", time);
+
+
+    // Check the result correctness
     for (auto i=0; i<num_data; i++) {
         if (out[i] != inA[i] + inB[i]) {
-            printf("Result test failed!\n");
+            printf("    [[ERR]] result check failed!\n");
             exit(1);
         }
     }
-    printf("Result test succeeded\n");
+    printf("    -- result test succeeded\n");
     
     return 0;
 }

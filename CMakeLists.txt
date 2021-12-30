@@ -8,9 +8,9 @@ set(PATH_SYCL_LIB ${PATH_SYCL_BUILD}/lib)
 
 # Proejct info
 project(
-    SYCL_VECTOR_ADDITION
+    SYCL_EASY_EXAMPLE
     VERSION 0.1
-    DESCRIPTION "sycl vector addition example"
+    DESCRIPTION "sycl easy example"
 )
 
 add_subdirectory(test)
