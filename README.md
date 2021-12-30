@@ -12,16 +12,17 @@ Build steps
 3. make
 
 ## 1. Device Querying Example
-Very easy SYCL device querying example 
-
-
-## 2. Vector Addition Example
-Vesy easy vector addition example implemented with SYCL DPC++.  
-No parallel optimization technique implemented.  
-A work item only performs a single element-wise addition.
+Very easy SYCL device querying example   
   
+  
+## 2. Vector Addition Example
+Vesy easy vector addition example implemented with SYCL DPC++.    
+No parallel optimization technique implemented.    
+A work item only performs a single element-wise addition.  
+    
 ## 3. Matrix Multiplication Example
 Simple matrix multiplication example implemented with SYCL DPC++.  
-C[M,N] = A[M,K] * B[K,N];
-No parallel optimization technique implemented.  
-The work item with ID[m, n] only does dot product between the m-th row of A and the n-th colomn of B.
+C[M,N] = A[M,K] * B[K,N];  
+No parallel optimization technique implemented.    
+The work item with ID[m, n] only does dot product between the m-th row of A and the n-th colomn of B.   
+  
