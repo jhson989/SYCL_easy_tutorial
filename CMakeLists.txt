@@ -5,7 +5,7 @@ set(PATH_SYCL_BUILD /data/share/oneapi/llvm/build)
 set(CMAKE_CXX_COMPILER ${PATH_SYCL_BUILD}/bin/clang++)
 set(PATH_SYCL_INC ${PATH_SYCL_BUILD}/include/sycl)
 set(PATH_SYCL_LIB ${PATH_SYCL_BUILD}/lib)
-set(SYCL_COMPILE_OPTIONT "-fsycl -fsycl-targets=nvptx64-nvidia-cuda")
+set(SYCL_COMPILE_OPTIONT -fsycl -fsycl-targets=nvptx64-nvidia-cuda)
 
 # Proejct info
 project(
