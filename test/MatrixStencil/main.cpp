@@ -9,7 +9,6 @@ namespace sycl = cl::sycl;
 #include <matrixStencil.hpp>
 #include <devceiProperties.hpp>
 bool check_result(std::vector<float>& input, std::vector<float>& output, float* kernel);
-float float_rand() {return (rand()%100-50)/100.0f;}
 
 const size_t size_input[2] = {10*1024, 10*1024};
 const size_t size_kernel[2] = {3, 3};
@@ -32,7 +31,7 @@ int main(void) {
 
     // Data initialization
     std::vector<float> input(size_input[0]*size_input[1]);
-    std::generate(input.begin(), input.end(), float_rand);
+    std::generate(input.begin(), input.end(), [](){return (rand()%100-50)/100.0f;});
     std::vector<float> output(size_output[0]*size_output[1], 0.0f);
     float kernel[] = {-1, -1, -1,
                       -1, +9, -1,
@@ -63,7 +62,7 @@ int main(void) {
     return 0;
 }
 
-bool in_range(float pred, float gt) {
+inline bool in_range(float pred, float gt) {
     return (gt-(1e-4) <= pred && pred <= gt+(1e-4));
 }
 

@@ -61,7 +61,7 @@ int main(void) {
     return 0;
 }
 
-bool in_range(float pred, float gt) {
+inline bool in_range(float pred, float gt) {
     return (gt-(1e-4) <= pred && pred <= gt+(1e-4));
 }
 

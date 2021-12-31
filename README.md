@@ -27,4 +27,6 @@ No parallel optimization technique implemented.
 The work item with ID[m, n] only does dot product between the m-th row of A and the n-th colomn of B.   
   
 ## 4. Matrix Stencil Operation Example
-  
+Simple stencil operation on matrix example implemented with SYCL DPC++.  
+This example performs correlation operation.  
+No parallel optimization technique implemented.    
