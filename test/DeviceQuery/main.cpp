@@ -1,7 +1,7 @@
 #include <CL/sycl.hpp>
 namespace sycl = cl::sycl;
 
-#include <devceiProperties.hpp>
+#include <deviceProperties.hpp>
 
 
 int main(void) {

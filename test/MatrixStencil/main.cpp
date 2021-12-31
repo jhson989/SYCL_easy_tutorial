@@ -7,7 +7,7 @@
 namespace sycl = cl::sycl;
 
 #include <matrixStencil.hpp>
-#include <devceiProperties.hpp>
+#include <deviceProperties.hpp>
 bool check_result(std::vector<float>& input, std::vector<float>& output, float* kernel);
 
 const size_t size_input[2] = {10*1024, 10*1024};

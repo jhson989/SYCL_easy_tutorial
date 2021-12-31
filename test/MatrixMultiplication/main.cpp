@@ -7,7 +7,7 @@
 namespace sycl = cl::sycl;
 
 #include <matrixMultiplication.hpp>
-#include <devceiProperties.hpp>
+#include <deviceProperties.hpp>
 
 bool check_result(std::vector<float>& inA, std::vector<float>& inB, std::vector<float>& out);
 

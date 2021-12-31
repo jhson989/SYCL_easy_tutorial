@@ -6,7 +6,7 @@
 namespace sycl = cl::sycl;
 
 #include <vectorAddition.hpp>
-#include <devceiProperties.hpp>
+#include <deviceProperties.hpp>
 
 const size_t num_data = 1<<25;
 

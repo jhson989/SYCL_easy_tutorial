@@ -1,7 +1,10 @@
 #include <iostream>
 #include <cstdio>
+
 #include <CL/sycl.hpp>
 namespace sycl = cl::sycl;
+
+#include <deviceProperties.hpp>
 
 void print_properties_host() {
     
