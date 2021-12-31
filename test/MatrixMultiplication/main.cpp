@@ -1,5 +1,6 @@
 #include <vector>
 #include <cstdlib>
+#include <algorithm>
 #include <sys/time.h>
 
 #include <CL/sycl.hpp>
@@ -27,18 +28,13 @@ int main(void) {
     print_properties(queue);
 
     // Data initialization
-    std::vector<float> inA;
-    std::vector<float> inB;
-    std::vector<float> out;
-    inA.reserve(M*K);
+    std::vector<float> inA(M*K);
+    std::vector<float> inB(K*N);
+    std::vector<float> out(M*N, 0.0f);
     for (auto i=0; i<M*K; i++) 
         inA.push_back((rand()%100-50)/100.0f);
-    inB.reserve(K*N);
     for (auto i=0; i<K*N; i++)
         inB.push_back((rand()%100-50)/100.0f);
-    out.reserve(M*N);
-    for (auto i=0; i<M*N; i++)
-        out.push_back(0.0f);
     
     // Run the kernel
     printf("==============================================================\n");

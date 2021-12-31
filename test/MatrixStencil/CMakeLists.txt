@@ -1,4 +1,4 @@
-set(APP Stencil.out)
+set(APP MatrixStencil.out)
 
 set(MAIN main.cpp)
 set(SRC_FILES
