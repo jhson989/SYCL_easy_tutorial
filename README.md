@@ -22,7 +22,9 @@ A work item only performs a single element-wise addition.
     
 ## 3. Matrix Multiplication Example
 Simple matrix multiplication example implemented with SYCL DPC++.  
-    C[M,N] = A[M,K] * B[K,N];  
+&nbsp;C[M,N] = A[M,K] * B[K,N];  
 No parallel optimization technique implemented.    
 The work item with ID[m, n] only does dot product between the m-th row of A and the n-th colomn of B.   
+  
+## 4. Matrix Stencil Operation Example
   

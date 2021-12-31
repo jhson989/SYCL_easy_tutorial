@@ -1,7 +1,7 @@
-set(APP VectorAddition.out)
+set(APP Stencil.out)
 
 set(MAIN main.cpp)
-set(SRC_FILES 
+set(SRC_FILES
     ../../src/deviceProperties.cpp
 )
 
