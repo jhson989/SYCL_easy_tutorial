@@ -1,10 +1,17 @@
 # SYCL_easy_tutorial
 
+## Overview
+This is an easy SYCL tutorial written by jhson.  
+Feel free to read and use it. (but is is a little bit inefficient.)  
+SYCL device codes are inplemented as C++ template function in the directory "include/"
+The codes in the directory "test/" are host codes for using these device kernels.
+
 ## 0. How to Run
 Environemnt
 - clang 14.0.0 (https://github.com/intel/llvm.git 8c5b7017a925701ef4034056b5ed8e0fac2a0011)
 - cmake 3.20.2
 - cuda 10.2
+- Intel CPU Runtime for OpenCL 18.1
   
 Build steps
 1. mkdir build && cd build
