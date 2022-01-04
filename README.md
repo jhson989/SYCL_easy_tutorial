@@ -2,7 +2,7 @@
 
 ## Overview
 This is an easy SYCL tutorial written by jhson.  
-Feel free to read and use it. (but is is a little bit inefficient.)  
+Feel free to read and use it. (but it is a little bit inefficient.)  
 SYCL device codes are inplemented as C++ template function in the directory "include/"
 The codes in the directory "test/" are host codes for using these device kernels.
 
