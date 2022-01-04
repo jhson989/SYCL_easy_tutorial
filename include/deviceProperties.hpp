@@ -4,6 +4,7 @@
 #include <CL/sycl.hpp>
 
 void print_properties_host();
+void print_properties_cpu();
 void print_properties_gpu();
 void print_properties(sycl::queue& queue);
 
