@@ -35,7 +35,7 @@ int main(void) {
 
     // Data initialization
     std::vector<TYPE> A(num_data);
-    std::generate(A.begin(), A.end(), [](){return (rand()%5);});
+    std::generate(A.begin(), A.end(), [](){return (rand());});
 
     // Calculate the ground truth.
     printf("    -- CPU sequential run\n");
