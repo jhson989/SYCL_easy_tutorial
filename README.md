@@ -37,3 +37,6 @@ The work item with ID[m, n] only does dot product between the m-th row of A and 
 Simple stencil operation on matrix example implemented with SYCL DPC++.  
 This example performs correlation operation.  
 No parallel optimization technique implemented.    
+
+## 5. Parallel Reduction Example
+Simple parallel reduction example implemented with SYCL DPC++.  

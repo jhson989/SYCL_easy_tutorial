@@ -9,3 +9,6 @@ add_subdirectory(MatrixMultiplication)
 
 # SYCL matrix stencil operation example
 add_subdirectory(MatrixStencil)
+
+# SYCL reduction example
+add_subdirectory(Reduction)
