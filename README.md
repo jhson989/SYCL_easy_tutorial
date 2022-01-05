@@ -40,3 +40,8 @@ No parallel optimization technique implemented.
 
 ## 5. Parallel Reduction Example
 Simple parallel reduction example implemented with SYCL DPC++.  
+Use the local memory and the sequential addressing optimization [1] technique
+
+
+#### References
+>> [1] Harris, M. (2007). Optimizing parallel reduction in CUDA. NVIDIA Developer Technology.
