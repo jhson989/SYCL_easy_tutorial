@@ -12,3 +12,6 @@ add_subdirectory(MatrixStencil)
 
 # SYCL reduction example
 add_subdirectory(Reduction)
+
+# SYCL Memory
+add_subdirectory(Memory)
