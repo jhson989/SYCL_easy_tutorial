@@ -42,6 +42,13 @@ No parallel optimization technique implemented.
 Simple parallel reduction example implemented with SYCL DPC++.  
 Use the local memory and the sequential addressing optimization [1] technique
 
+## 6. Memory Management Example
+Sycl provide two memory management techniques: Unified shared memory (USM) and Buffer.  
+USM can use three different memory spaces, which are host, device, and shared.
+This example shows the performance of each technique.
+
+## 7. Execution Model Example
+
 
 #### References
 >> [1] Harris, M. (2007). Optimizing parallel reduction in CUDA. NVIDIA Developer Technology.

@@ -15,3 +15,6 @@ add_subdirectory(Reduction)
 
 # SYCL Memory
 add_subdirectory(Memory)
+
+# SYCL ExecutionModel
+add_subdirectory(ExecutionModel)
