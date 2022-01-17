@@ -15,12 +15,13 @@ namespace sycl = cl::sycl;
 timeval start, end;
 #define ELAPSED_TIME(st, ed) ((ed.tv_sec - st.tv_sec) + ((ed.tv_usec-st.tv_usec)*1e-6))
 
-const size_t M=1024, N=1024, K=1024;
+
+const size_t M=1024*19, N=1024*19, K=1024*19;
 
 void check_result(const std::vector<DTYPE>& A, const std::vector<DTYPE>& B, const std::vector<DTYPE>& C);
 
 int main(void) {
-
+    srand(time(NULL));
     // Run the kernel
     std::cout << "==============================================================\n";
     std::cout << "Execution Model Performance Test with a Signle GPU Device\n";
@@ -35,37 +36,42 @@ int main(void) {
     // Data Initialization
     std::vector<DTYPE> A(M*K);
     std::vector<DTYPE> B(K*N);
-    std::vector<DTYPE> C(M*N);
-    std::generate(A.begin(), A.end(), [](){return (rand()%100-50)/10;});
-    std::generate(B.begin(), B.end(), [](){return (rand()%100-50)/10;});
+    std::vector<DTYPE> C(M*N, 0);
+    std::generate(A.begin(), A.end(), [](){return (rand()%100-50);});
+    std::generate(B.begin(), B.end(), [](){return (rand()%100-50);});
     
     /**************************************************************************************
      * Basic kernel
      ***/
-    std::cout << "Basic kernel launched\n";
+    std::cout << "\nBasic kernel launched\n";
     gettimeofday(&start, NULL);
-    // TODO
+    basic::matrix_multiplication(queue, A, B, C, M, N, K);
     gettimeofday(&end, NULL);
-    std::cout << "--- Elapsed time : " << ELAPSED_TIME(start, end) << "s\n\n";
+    std::cout << "--- Elapsed time : " << ELAPSED_TIME(start, end) << "s\n";
 
     #ifdef DEBUG_MODE
     check_result(A, B, C);
     #endif
 
+    
     /**************************************************************************************
      * ND range kernel
      ***/
-    std::cout << "ND range kernel launched\n";
+    std::cout << "\nND range kernel launched\n";
     gettimeofday(&start, NULL);
-    // TODO
+    NDRange::matrix_multiplication(queue, A, B, C, M, N, K);
     gettimeofday(&end, NULL);
-    std::cout << "--- Elapsed time : " << ELAPSED_TIME(start, end) << "s\n\n";
+    std::cout << "--- Elapsed time : " << ELAPSED_TIME(start, end) << "s\n";
 
     #ifdef DEBUG_MODE
     check_result(A, B, C);
     #endif
 
-    // Hierarchy kernel
+
+
+    /**************************************************************************************
+     * Hierarchical kernel
+     ***/
     // TODO
 
 
@@ -73,20 +79,29 @@ int main(void) {
 }
 
 
-void check_result(const std::vector<DTYPE>& A, const std::vector<DTYPE>& B, const std::vector<DTYPE>& C) {
+inline bool IN_RANGE(DTYPE gt, DTYPE t) {return( gt-(0.001)<=t && t <= gt+(0.001) );}
 
-    for (size_t m=0; m<M; m++) {
-        for (size_t n=0; n<N; n++) {
+void check_result(const std::vector<DTYPE>& A, const std::vector<DTYPE>& B, const std::vector<DTYPE>& C) {
+    bool correct = true;
+    #pragma omp parallel for num_threads(8)
+    for (auto m=0; m<M; m++) {
+        for (auto n=0; n<N&&correct; n++) {
             DTYPE sum = 0;
-            for (size_t k=0; k<K; k++) {
+            for (auto k=0; k<K; k++) {
                 sum += A[m*K+k] * B[k*N+n];
             }
-            if (sum != C[m*N+n]) {
-                std::cout << "[[[ERROR]]] Checking the result fails at [" << m << "," << n << "]\n";
-                std::cout << "--- Expected : " << sum << ", but result : " << C[m*N+n] << std::endl;
-                return;
+            if (IN_RANGE(sum, C[m*N+n]) == false) {
+                #pragma omp critical
+                {
+                    std::cout << "[[[ERROR]]] Checking the result fails at [" << m << "," << n << "]\n";
+                    std::cout << "--- Expected : " << sum << ", but result : " << C[m*N+n] << std::endl;
+                    correct = false;
+                }
             }
         }
     }
-    std::cout << "--- Checking the result succeed!!! \n";
+
+    if (correct)
+        std::cout << "--- Checking the result succeed!!! \n";
+    return;
 }

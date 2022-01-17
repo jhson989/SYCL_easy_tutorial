@@ -12,4 +12,4 @@ target_compile_options(${APP} PUBLIC ${SYCL_COMPILE_OPTION})
 
 target_link_libraries(${APP} PUBLIC sycl)
 target_link_directories(${APP} PUBLIC ${PATH_SYCL_LIB})
-target_link_options(${APP} PUBLIC ${SYCL_COMPILE_OPTION})
+target_link_options(${APP} PUBLIC ${SYCL_COMPILE_OPTION} -fopenmp)
