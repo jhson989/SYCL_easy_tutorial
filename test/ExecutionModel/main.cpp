@@ -16,7 +16,7 @@ timeval start, end;
 #define ELAPSED_TIME(st, ed) ((ed.tv_sec - st.tv_sec) + ((ed.tv_usec-st.tv_usec)*1e-6))
 
 
-const size_t M=1024*19, N=1024*19, K=1024*19;
+const size_t M=1024*18+13, N=1024*19+1, K=1024*18+7;
 
 void check_result(const std::vector<DTYPE>& A, const std::vector<DTYPE>& B, const std::vector<DTYPE>& C);
 
@@ -67,6 +67,19 @@ int main(void) {
     check_result(A, B, C);
     #endif
 
+
+    /**************************************************************************************
+     * ND range kernel - GPU optimized version
+     ***/
+    std::cout << "\nND range kernel launched - GPU optimized version\n";
+    gettimeofday(&start, NULL);
+    NDRange::matrix_multiplication_gpu_optimized(queue, A, B, C, M, N, K, 16);
+    gettimeofday(&end, NULL);
+    std::cout << "--- Elapsed time : " << ELAPSED_TIME(start, end) << "s\n";
+
+    #ifdef DEBUG_MODE
+    check_result(A, B, C);
+    #endif
 
 
     /**************************************************************************************
