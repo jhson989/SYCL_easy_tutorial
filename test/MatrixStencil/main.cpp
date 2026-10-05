@@ -78,7 +78,7 @@ bool check_result(std::vector<float>& input, std::vector<float>& output, float* 
             for (int ky=0; ky<size_kernel[0]; ky++) {
                 for (int kx=0; kx<size_kernel[1]; kx++) {
                     if (0 <= y+ky && y+ky < size_input[0] && 0 <= x+kx && x+kx < size_input[1]) {
-                        sum += input[(y+ky)*size_input[1]+(x+kx)]*kernel[ky*size_kernel[1]+ky];
+                        sum += input[(y+ky)*size_input[1]+(x+kx)]*kernel[ky*size_kernel[1]+kx];
                     }
                 }
             }

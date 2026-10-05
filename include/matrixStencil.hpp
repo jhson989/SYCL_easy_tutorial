@@ -40,7 +40,7 @@ void parallel_matrix_stencil(
             for (int ky=0; ky<size_kernel_y; ky++) {
                 for (int kx=0; kx<size_kernel_x; kx++) {
                     if (0 <= y+ky && y+ky < size_input_y && 0 <= x+kx && x+kx < size_input_x) {
-                        sum += acc_input[(y+ky)*size_input_x+(x+kx)]*acc_kernel[ky*size_kernel_x+ky];
+                        sum += acc_input[(y+ky)*size_input_x+(x+kx)]*acc_kernel[ky*size_kernel_x+kx];
                     }
                 }
             }

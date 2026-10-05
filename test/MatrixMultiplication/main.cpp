@@ -1,5 +1,6 @@
 #include <vector>
 #include <cstdlib>
+#include <cmath>
 #include <algorithm>
 #include <sys/time.h>
 
@@ -32,9 +33,9 @@ int main(void) {
     std::vector<float> inB(K*N);
     std::vector<float> out(M*N, 0.0f);
     for (auto i=0; i<M*K; i++) 
-        inA.push_back((rand()%100-50)/100.0f);
+        inA[i] = (rand()%100-50)/100.0f;
     for (auto i=0; i<K*N; i++)
-        inB.push_back((rand()%100-50)/100.0f);
+        inB[i] = (rand()%100-50)/100.0f;
     
     // Run the kernel
     printf("==============================================================\n");
@@ -62,7 +63,8 @@ int main(void) {
 }
 
 inline bool in_range(float pred, float gt) {
-    return (gt-(1e-4) <= pred && pred <= gt+(1e-4));
+    // Relative tolerance: float rounding accumulates over K additions
+    return std::fabs(pred-gt) <= 1e-3f * std::fmax(1.0f, std::fabs(gt));
 }
 
 bool check_result(std::vector<float>& inA, std::vector<float>& inB, std::vector<float>& out) {
